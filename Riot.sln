@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35617.110 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotSharp", "RiotSharp\RiotSharp.csproj", "{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotConsole", "RiotConsole\RiotConsole.csproj", "{827DF07E-5096-40CA-8780-73BDBD39B7D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{827DF07E-5096-40CA-8780-73BDBD39B7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{827DF07E-5096-40CA-8780-73BDBD39B7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{827DF07E-5096-40CA-8780-73BDBD39B7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{827DF07E-5096-40CA-8780-73BDBD39B7D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B0FFA71-464A-4135-9121-C1F0C2DBFE32}
+	EndGlobalSection
+EndGlobal
