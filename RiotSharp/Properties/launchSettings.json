@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RiotSharp": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\terry\\Documents\\Projects\\Riot\\RiotConsole\\bin\\Debug\\net8.0"
+    }
+  }
+}
