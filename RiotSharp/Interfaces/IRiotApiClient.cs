@@ -6,11 +6,11 @@ namespace RiotSharp.Interfaces
     internal interface IRiotApiClient
     {
         public Task<CurrentSession?> GetAccountSessionAsync();
-        public Task<Summoner?> GetSummonerAsync();
-        public Task<Champions?> GetChampionAsync();
+        public Task<string?> GetUsernameAsync();
+        public Task<List<Champions>>? GetAllChampionsAsync();
         public Task<Rank?> GetRankAsync();
         public Task<ChampionSelect?> GetChampionSelectAsync();
-        public Task CreateSoloDuoLobbyAsync(QueueId queueId);
+        public Task CreateLobby(QueueId queueId);
         public Task QueueAsync(QueueType queueType);
         public Task HoverChampionAsync(int actionId, int championId);
         public Task SelectRoleAsync(string firstRole, string secondRole);
@@ -23,5 +23,6 @@ namespace RiotSharp.Interfaces
         public Task InviteFriendASync(string summonerId);
         public Task DodgeLobbyAsync();
         public Task SelectSummonerSpellAsync(SummonerSpell firstSpell, SummonerSpell secondSpell);
+        public Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests);
     }
 }

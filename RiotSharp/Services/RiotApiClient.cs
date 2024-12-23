@@ -3,27 +3,43 @@ using RiotSharp.Enums;
 using RiotSharp.Interfaces;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
+using System.Data;
+using System.Net;
+using System.Text.Json.Nodes;
 
 namespace RiotSharp.Services
 {
     public class RiotApiClient : IRiotApiClient
     {
-        private HttpClientFactory _httpClient = new();
+        private readonly HttpClientFactory _httpClient = new();
 
-        public async Task<CurrentSession> GetAccountSessionAsync()
+        public async Task<CurrentSession?> GetAccountSessionAsync()
         {
             var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
             return JsonConvert.DeserializeObject<CurrentSession>(response)!;
         }
 
-        public Task<Summoner?> GetSummonerAsync()
+        public async Task<string?> GetUsernameAsync()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
+
+            var json = JsonConvert.DeserializeObject<dynamic>(response);
+            return json.username;
         }
 
-        public Task<Champions?> GetChampionAsync()
+        public async Task<string?> GetSummonerId()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
+
+            var json = JsonConvert.DeserializeObject<dynamic>(response);
+            return json.summonerId;
+        }
+
+        public async Task<List<Champions>>? GetAllChampionsAsync()
+        {
+            var account = await GetAccountSessionAsync();
+            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, $"/lol-champions/v1/inventories/{account.AccountId}/champions-minimal");
+            return JsonConvert.DeserializeObject<List<Champions>>(response);
         }
 
         public Task<Rank?> GetRankAsync()
@@ -31,34 +47,65 @@ namespace RiotSharp.Services
             throw new NotImplementedException();
         }
 
-        public Task<ChampionSelect?> GetChampionSelectAsync()
+        public async Task<ChampionSelect?> GetChampionSelectAsync()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "lol-champ-select/v1/session");
+            return JsonConvert.DeserializeObject<ChampionSelect?>(response);
         }
 
-        public async Task CreateSoloDuoLobbyAsync(QueueId queueId)
+        public async Task CreateLobby(QueueId queueId)
         {
-            await _httpClient.MakeApiRequest(RequestMethod.Post, "/lol-lobby/v2/lobby", "{{\"queueId\":{queueId}}}");
+            await _httpClient.MakeApiRequest(RequestMethod.Post, "/lol-lobby/v2/lobby", $"{{\"queueId\":{queueId}}}");
         }
 
-        public Task QueueAsync(QueueType queueType)
+        public async Task QueueAsync(QueueType queueType)
         {
-            throw new NotImplementedException();
+            await _httpClient.MakeApiRequest(RequestMethod.Post, "/lol-lobby/v2/lobby/matchmaking/search");
         }
 
-        public Task HoverChampionAsync(int actionId, int championId)
+        public async Task HoverChampionAsync(int actionId, int championId)
         {
-            throw new NotImplementedException();
+            await _httpClient.MakeApiRequest(RequestMethod.Patch, "/lol-champ-select/v1/session/actions/" + actionId, "{\"championId\":" + championId + "}");
         }
 
-        public Task SelectRoleAsync(string firstRole, string secondRole)
+        public async Task SelectRoleAsync(string? firstRole, string? secondRole)
         {
-            throw new NotImplementedException();
+            var body = new
+            {
+                firstPreference = firstRole,
+                secondPreference = secondRole,
+            };
+
+            var jsonBody = JsonConvert.SerializeObject(body);
+            await _httpClient.MakeApiRequest(RequestMethod.Put, "/lol-lobby/v1/lobby/members/localMember/position-preferences", jsonBody);
         }
 
-        public Task AcceptFriendRequestAsync(List<FriendRequest?> friendRequests)
+        public async Task<List<FriendRequest?>> GetFriendRequests()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, $"/lol-chat/v2/friend-requests");
+            return JsonConvert.DeserializeObject<List<FriendRequest?>>(response);
+        }
+
+        /// <summary>
+        /// Pass the friend request Puuid to accept the request
+        /// </summary>
+        /// <param name="puuid"></param>
+        /// <returns></returns>
+        public async Task AcceptFriendRequestAsync(string? puuid)
+        {
+            var body = new { direction = "both" };
+            var jsonBody = JsonConvert.SerializeObject(body);
+            await _httpClient.MakeApiRequest(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{puuid}", jsonBody);
+        }
+
+        public async Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests)
+        {
+            foreach (var friend in friendRequests)
+            {
+                var body = new { direction = "both" };
+                var jsonBody = JsonConvert.SerializeObject(body);
+                await _httpClient.MakeApiRequest(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend.Puuid}", jsonBody);
+            }
         }
 
         public Task<List<Invites>?> GetCurrentLobbyInvitesAsync()

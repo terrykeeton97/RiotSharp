@@ -12,10 +12,9 @@ namespace RiotSharp.Utilities
         private readonly HttpClient _httpClient;
         private bool _isConnected;
         private Tuple<Process, string, string>? _processInfo;
-        internal event Action OnConnected;
-        private static readonly Regex AuthTokenRegex = new Regex("\"--remoting-auth-token=(.+?)\"");
-        private static readonly Regex PortRegex = new Regex("\"--app-port=(\\d+?)\"");
 
+        internal event Action OnConnected;
+        
         internal HttpClientFactory()
         {
             try
@@ -39,24 +38,27 @@ namespace RiotSharp.Utilities
             TryConnect();
         }
 
-        internal async Task<string> MakeApiRequest(RequestMethod requestMethod, string url, object? body = null)
+        internal async Task<string?> MakeApiRequest(RequestMethod requestMethod, string url, object? body = null)
         {
             if (!_isConnected)
                 throw new InvalidOperationException("Not connected to the LCU Api");
-
-            string method = requestMethod.ToString().ToUpper();
 
             if (url[0] != '/')
             {
                 url = "/" + url;
             }
 
-            var response = await _httpClient.SendAsync(new HttpRequestMessage(new HttpMethod(method), "https://127.0.0.1:" + _processInfo.Item3 + url)
+            if (_processInfo != null)
             {
-                Content = body == null ? null : new StringContent(JsonConvert.SerializeObject(body), System.Text.Encoding.UTF8, "application/json")
-            });
+                var response = await _httpClient.SendAsync(new HttpRequestMessage(new HttpMethod(requestMethod.ToString().ToUpper()), "https://127.0.0.1:" + _processInfo.Item3 + url)
+                {
+                    Content = body == null ? null : new StringContent(body.ToString()!, System.Text.Encoding.UTF8, "application/json")
+                });
 
-            return await response.Content.ReadAsStringAsync();
+                return await response.Content.ReadAsStringAsync();
+            }
+
+            return null;
         }
 
         private void TryConnect()
@@ -73,6 +75,7 @@ namespace RiotSharp.Utilities
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
             _isConnected = true;
+            //OnConnected.Invoke();
         }
 
         private Tuple<Process, string, string>? GetLeagueStatus()
@@ -117,8 +120,8 @@ namespace RiotSharp.Utilities
 
     internal class OnWebSocketEventArgs : EventArgs
     {
-        internal string Path { get; set; }
-        internal string Type { get; set; }
-        internal dynamic Data { get; set; }
+        internal string? Path { get; set; }
+        internal string? Type { get; set; }
+        internal dynamic? Data { get; set; }
     }
 }
