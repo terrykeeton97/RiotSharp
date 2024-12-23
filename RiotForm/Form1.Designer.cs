@@ -37,6 +37,8 @@ partial class Form1
         comboBox2 = new ComboBox();
         labelRoleSelection = new Label();
         button5 = new Button();
+        listBox2 = new ListBox();
+        button6 = new Button();
         SuspendLayout();
         // 
         // button1
@@ -121,19 +123,41 @@ partial class Form1
         // 
         // button5
         // 
-        button5.Location = new Point(34, 297);
+        button5.Location = new Point(178, 326);
         button5.Name = "button5";
-        button5.Size = new Size(138, 23);
+        button5.Size = new Size(217, 23);
         button5.TabIndex = 8;
         button5.Text = "Accept Friend Requests";
         button5.UseVisualStyleBackColor = true;
         button5.Click += button5_Click;
+        // 
+        // listBox2
+        // 
+        listBox2.FormattingEnabled = true;
+        listBox2.ItemHeight = 15;
+        listBox2.Location = new Point(178, 137);
+        listBox2.Name = "listBox2";
+        listBox2.Size = new Size(217, 154);
+        listBox2.TabIndex = 9;
+        listBox2.DoubleClick += listBox2_DoubleClick;
+        // 
+        // button6
+        // 
+        button6.Location = new Point(178, 297);
+        button6.Name = "button6";
+        button6.Size = new Size(217, 23);
+        button6.TabIndex = 10;
+        button6.Text = "Get Friend Requests";
+        button6.UseVisualStyleBackColor = true;
+        button6.Click += button6_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(822, 544);
+        Controls.Add(button6);
+        Controls.Add(listBox2);
         Controls.Add(button5);
         Controls.Add(labelRoleSelection);
         Controls.Add(comboBox2);
@@ -161,4 +185,6 @@ partial class Form1
     private ComboBox comboBox2;
     private Label labelRoleSelection;
     private Button button5;
+    private ListBox listBox2;
+    private Button button6;
 }

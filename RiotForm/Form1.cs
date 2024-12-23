@@ -1,3 +1,4 @@
+using RiotSharp.Models;
 using RiotSharp.Services;
 
 namespace RiotForm;
@@ -55,5 +56,26 @@ public partial class Form1 : Form
     {
         var friendRequests = await riotClient.GetFriendRequests();
         await riotClient.AcceptFriendRequestAsync(friendRequests);
+    }
+
+    private async void button6_Click(object sender, EventArgs e)
+    {
+        var friendRequests = await riotClient.GetFriendRequests();
+        listBox2.Items.Clear();
+
+        foreach (var friend in friendRequests)
+        {
+            listBox2.Items.Add(friend);
+        }
+    }
+
+    private async void listBox2_DoubleClick(object sender, EventArgs e)
+    {
+        var selectedFriend = listBox2.SelectedItem as FriendRequest;
+
+        if (selectedFriend != null)
+        {
+            await riotClient.AcceptFriendRequestAsync(selectedFriend.Puuid);
+        }
     }
 }

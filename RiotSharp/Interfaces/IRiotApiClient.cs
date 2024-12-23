@@ -17,12 +17,10 @@ namespace RiotSharp.Interfaces
         public Task AcceptFriendRequestAsync(List<FriendRequest?> friendRequests);
         public Task<List<Invites>?> GetCurrentLobbyInvitesAsync();
         public Task AcceptDuoInviteAsync(int inviteId);
-        public Task<List<FriendRequest>?> CheckFriendRequestAsync();
         public Task<List<Friends>?> GetCurrentFriendsListAsync();
         public Task<List<Champions>?> GetCurrentChampionsAsync();
         public Task InviteFriendASync(string summonerId);
         public Task DodgeLobbyAsync();
         public Task SelectSummonerSpellAsync(SummonerSpell firstSpell, SummonerSpell secondSpell);
-        public Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests);
     }
 }

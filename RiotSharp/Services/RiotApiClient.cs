@@ -3,9 +3,6 @@ using RiotSharp.Enums;
 using RiotSharp.Interfaces;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
-using System.Data;
-using System.Net;
-using System.Text.Json.Nodes;
 
 namespace RiotSharp.Services
 {
@@ -80,6 +77,16 @@ namespace RiotSharp.Services
             await _httpClient.MakeApiRequest(RequestMethod.Put, "/lol-lobby/v1/lobby/members/localMember/position-preferences", jsonBody);
         }
 
+        public async Task AcceptFriendRequestAsync(List<FriendRequest?> friendRequests)
+        {
+            foreach (var friend in friendRequests)
+            {
+                var body = new { direction = "both" };
+                var jsonBody = JsonConvert.SerializeObject(body);
+                await _httpClient.MakeApiRequest(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend.Puuid}", jsonBody);
+            }
+        }
+
         public async Task<List<FriendRequest?>> GetFriendRequests()
         {
             var response = await _httpClient.MakeApiRequest(RequestMethod.Get, $"/lol-chat/v2/friend-requests");
@@ -98,27 +105,12 @@ namespace RiotSharp.Services
             await _httpClient.MakeApiRequest(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{puuid}", jsonBody);
         }
 
-        public async Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests)
-        {
-            foreach (var friend in friendRequests)
-            {
-                var body = new { direction = "both" };
-                var jsonBody = JsonConvert.SerializeObject(body);
-                await _httpClient.MakeApiRequest(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend.Puuid}", jsonBody);
-            }
-        }
-
         public Task<List<Invites>?> GetCurrentLobbyInvitesAsync()
         {
             throw new NotImplementedException();
         }
 
         public Task AcceptDuoInviteAsync(int inviteId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<FriendRequest>?> CheckFriendRequestAsync()
         {
             throw new NotImplementedException();
         }
