@@ -1,34 +1,58 @@
-﻿namespace RiotSharp.Models
+﻿using Newtonsoft.Json;
+
+namespace RiotSharp.Models
 {
     public class Invites
     {
-        public class LobbyInvitationResponse
+        public class Invite
         {
-            public int Id { get; set; }
-            public TaskStatus Status { get; set; }
-            public string? Method { get; set; }
-            public List<LobbyInvitation>? Result { get; set; }
+            [JsonProperty("canAcceptInvitation")]
+            public bool? CanAcceptInvitation;
+
+            [JsonProperty("fromSummonerId")]
+            public int? FromSummonerId;
+
+            [JsonProperty("fromSummonerName")]
+            public string? FromSummonerName;
+
+            [JsonProperty("gameConfig")]
+            internal GameConfig? GameConfig;
+
+            [JsonProperty("invitationId")]
+            public string? InvitationId;
+
+            [JsonProperty("invitationType")]
+            public string? InvitationType;
+
+            [JsonProperty("restrictions")]
+            public List<object>? Restrictions;
+
+            [JsonProperty("state")]
+            public string? State;
+
+            [JsonProperty("timestamp")]
+            public string? Timestamp;
         }
 
-        public class LobbyInvitation
+        internal class GameConfig
         {
-            public bool CanAcceptInvitation { get; set; }
-            public long FromSummonerId { get; set; }
-            public string? FromSummonerName { get; set; }
-            public GameConfig? GameConfig { get; set; }
-            public string? InvitationId { get; set; }
-            public string? InvitationType { get; set; }
-            public List<object>? Restrictions { get; set; }
-            public string? State { get; set; }
-            public string? Timestamp { get; set; }
+            [JsonProperty("gameMode")]
+            public string? GameMode;
+
+            [JsonProperty("inviteGameType")]
+            public string? InviteGameType;
+
+            [JsonProperty("mapId")]
+            public int? MapId;
+
+            [JsonProperty("queueId")]
+            public int? QueueId;
         }
 
-        public class GameConfig
+        internal class Root
         {
-            public string? GameMode { get; set; }
-            public string? InviteGameType { get; set; }
-            public int MapId { get; set; }
-            public int QueueId { get; set; }
+            [JsonProperty("MyArray")]
+            public List<Invite>? MyArray;
         }
     }
 }

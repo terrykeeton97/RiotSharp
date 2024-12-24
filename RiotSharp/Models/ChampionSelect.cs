@@ -65,7 +65,6 @@ namespace RiotSharp.Models
         public List<TeamMember>? MyTeam { get; set; }
     }
 
-
     public class Action
     {
         [JsonProperty("actorCellId")]
