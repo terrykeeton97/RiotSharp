@@ -6,7 +6,7 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    public class ChampionSelectService : IChampionSelect
+    public class ChampionSelectService : IChampionSelectService
     {
         private HttpClientFactory _httpClient;
 

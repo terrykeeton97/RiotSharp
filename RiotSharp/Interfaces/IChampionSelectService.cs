@@ -3,7 +3,7 @@ using RiotSharp.Models;
 
 namespace RiotSharp.Interfaces
 {
-    internal interface IChampionSelect
+    internal interface IChampionSelectService
     {
         public Task<ChampionSelect?> GetChampionSelectAsync();
 
