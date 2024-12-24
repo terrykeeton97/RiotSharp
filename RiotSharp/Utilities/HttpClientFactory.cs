@@ -9,7 +9,7 @@ namespace RiotSharp.Utilities
     {
         private readonly HttpClient _httpClient;
         private readonly bool _isConnected;
-        private readonly Tuple<Process, string, string>? _processInfo;
+        private Tuple<Process, string, string>? _processInfo;
 
         internal event Action OnConnected;
         internal event Action OnDisconnected;
