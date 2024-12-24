@@ -12,12 +12,13 @@
 
     public enum Role
     {
-        None = 0,
+        Unselected = 0,
         Top = 1,
-        Middle = 2,
-        Bottom = 3,
-        Utility = 4,
-        Fill = 5,
+        Jungle = 2,
+        Middle = 3,
+        Bottom = 4,
+        Utility = 5,
+        Fill = 6,
     }
 
     public enum SummonerSpell

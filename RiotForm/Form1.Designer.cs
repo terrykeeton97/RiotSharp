@@ -39,6 +39,10 @@ partial class Form1
         button5 = new Button();
         listBox2 = new ListBox();
         button6 = new Button();
+        button7 = new Button();
+        button8 = new Button();
+        button9 = new Button();
+        button10 = new Button();
         SuspendLayout();
         // 
         // button1
@@ -85,9 +89,9 @@ partial class Form1
         // 
         listBox1.FormattingEnabled = true;
         listBox1.ItemHeight = 15;
-        listBox1.Location = new Point(34, 137);
+        listBox1.Location = new Point(34, 192);
         listBox1.Name = "listBox1";
-        listBox1.Size = new Size(138, 154);
+        listBox1.Size = new Size(138, 124);
         listBox1.TabIndex = 4;
         // 
         // comboBox1
@@ -123,7 +127,7 @@ partial class Form1
         // 
         // button5
         // 
-        button5.Location = new Point(178, 326);
+        button5.Location = new Point(178, 240);
         button5.Name = "button5";
         button5.Size = new Size(217, 23);
         button5.TabIndex = 8;
@@ -135,7 +139,7 @@ partial class Form1
         // 
         listBox2.FormattingEnabled = true;
         listBox2.ItemHeight = 15;
-        listBox2.Location = new Point(178, 137);
+        listBox2.Location = new Point(178, 51);
         listBox2.Name = "listBox2";
         listBox2.Size = new Size(217, 154);
         listBox2.TabIndex = 9;
@@ -143,7 +147,7 @@ partial class Form1
         // 
         // button6
         // 
-        button6.Location = new Point(178, 297);
+        button6.Location = new Point(178, 211);
         button6.Name = "button6";
         button6.Size = new Size(217, 23);
         button6.TabIndex = 10;
@@ -151,11 +155,52 @@ partial class Form1
         button6.UseVisualStyleBackColor = true;
         button6.Click += button6_Click;
         // 
+        // button7
+        // 
+        button7.Location = new Point(178, 269);
+        button7.Name = "button7";
+        button7.Size = new Size(217, 23);
+        button7.TabIndex = 11;
+        button7.Text = "Get Lobby Invites";
+        button7.UseVisualStyleBackColor = true;
+        button7.Click += button7_Click;
+        // 
+        // button8
+        // 
+        button8.Location = new Point(0, 0);
+        button8.Name = "button8";
+        button8.Size = new Size(75, 23);
+        button8.TabIndex = 0;
+        // 
+        // button9
+        // 
+        button9.Location = new Point(34, 137);
+        button9.Name = "button9";
+        button9.Size = new Size(138, 23);
+        button9.TabIndex = 12;
+        button9.Text = "Get Owned Champions";
+        button9.UseVisualStyleBackColor = true;
+        button9.Click += button9_Click;
+        // 
+        // button10
+        // 
+        button10.Location = new Point(34, 166);
+        button10.Name = "button10";
+        button10.Size = new Size(138, 23);
+        button10.TabIndex = 13;
+        button10.Text = "Get F2P Champions";
+        button10.UseVisualStyleBackColor = true;
+        button10.Click += button10_Click;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(822, 544);
+        Controls.Add(button10);
+        Controls.Add(button9);
+        Controls.Add(button8);
+        Controls.Add(button7);
         Controls.Add(button6);
         Controls.Add(listBox2);
         Controls.Add(button5);
@@ -187,4 +232,8 @@ partial class Form1
     private Button button5;
     private ListBox listBox2;
     private Button button6;
+    private Button button7;
+    private Button button8;
+    private Button button9;
+    private Button button10;
 }

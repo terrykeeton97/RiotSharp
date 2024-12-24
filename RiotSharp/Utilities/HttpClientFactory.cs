@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using RiotSharp.Enums;
+﻿using RiotSharp.Enums;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Authentication;
-using System.Text.RegularExpressions;
 
 namespace RiotSharp.Utilities
 {
@@ -14,7 +12,7 @@ namespace RiotSharp.Utilities
         private Tuple<Process, string, string>? _processInfo;
 
         internal event Action OnConnected;
-        
+
         internal HttpClientFactory()
         {
             try

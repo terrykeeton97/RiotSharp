@@ -3,9 +3,9 @@
     public enum RequestMethod
     {
         Get,
-        Post, 
-        Patch, 
-        Delete, 
+        Post,
+        Patch,
+        Delete,
         Put
     }
 }
