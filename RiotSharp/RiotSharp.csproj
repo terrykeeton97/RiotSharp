@@ -19,8 +19,4 @@
     <None Include="C:\Users\terry\Documents\Projects\Riot\RiotSharp\.editorconfig" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>
