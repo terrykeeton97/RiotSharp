@@ -7,8 +7,8 @@ namespace RiotSharp.Utilities
 {
     public class HttpClientFactory
     {
-        private readonly HttpClient _httpClient;
-        private readonly bool _isConnected;
+        private HttpClient _httpClient;
+        private bool _isConnected;
         private Tuple<Process, string, string>? _processInfo;
 
         internal event Action OnConnected;

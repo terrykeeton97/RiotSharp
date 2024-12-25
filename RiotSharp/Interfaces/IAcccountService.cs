@@ -6,8 +6,14 @@ namespace RiotSharp.Interfaces
     {
         public Task<CurrentSession?> GetAccountSessionAsync();
 
+        public Task<Summoner.Root?> GetSummonerAsync();
+
         public Task<string?> GetUsernameAsync();
 
         public Task<string?> GetSummonerIdAsync();
+
+        public Task<Rank.Root?> GetSummonerRankAsync(string summonerName);
+
+        public Task<ProfilePicture?> GetAllProfilePictureIds();
     }
 }
