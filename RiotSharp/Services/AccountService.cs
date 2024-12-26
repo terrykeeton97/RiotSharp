@@ -6,25 +6,23 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    public class AccountService : IAcccountService
+    public class AccountService(HttpClientFactory httpClientFactory) : IAcccountService
     {
-        private readonly HttpClientFactory _httpClient = new();
-
         public async Task<CurrentSession?> GetAccountSessionAsync()
         {
-            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
+            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
             return JsonConvert.DeserializeObject<CurrentSession>(response);
         }
 
         public async Task<Summoner.Root?> GetSummonerAsync()
         {
-            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-summoner/v1/current-summoner");
+            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-summoner/v1/current-summoner");
             return JsonConvert.DeserializeObject<Summoner.Root?>(response);
         }
 
         public async Task<string?> GetUsernameAsync()
         {
-            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
+            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
 
             var json = JsonConvert.DeserializeObject<dynamic>(response);
             return json.username;
@@ -32,7 +30,7 @@ namespace RiotSharp.Services
 
         public async Task<string?> GetSummonerIdAsync()
         {
-            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
+            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
 
             var json = JsonConvert.DeserializeObject<dynamic>(response);
             return json.summonerId;
@@ -40,7 +38,7 @@ namespace RiotSharp.Services
 
         public async Task<Rank.Root?> GetSummonerRankAsync(string summonerName)
         {
-            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "/lol-ranked/v1/current-ranked-stats");
+            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-ranked/v1/current-ranked-stats");
             return JsonConvert.DeserializeObject<Rank.Root?>(response);
         }
 

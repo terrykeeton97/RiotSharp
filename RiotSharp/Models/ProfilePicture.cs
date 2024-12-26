@@ -10,6 +10,7 @@ namespace RiotSharp.Models
         [JsonProperty("image")]
         public Image Image;
     }
+
     public class Image
     {
         [JsonProperty("full")]

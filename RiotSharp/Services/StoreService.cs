@@ -1,6 +1,9 @@
-﻿namespace RiotSharp.Services
+﻿using RiotSharp.Interfaces;
+using RiotSharp.Utilities;
+
+namespace RiotSharp.Services
 {
-    public class StoreService
+    public class StoreService(HttpClientFactory httpClientFactory) : IStoreService
     {
     }
 }

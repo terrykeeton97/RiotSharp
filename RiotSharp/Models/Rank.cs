@@ -483,7 +483,5 @@ namespace RiotSharp.Models
             [JsonProperty("timeUntilInactivityStatusChanges")]
             public int? TimeUntilInactivityStatusChanges;
         }
-
-
     }
 }

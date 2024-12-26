@@ -7,12 +7,11 @@ namespace RiotSharp.Utilities
 {
     public class HttpClientFactory
     {
+        public static readonly Lazy<HttpClientFactory> Instance = new(() => new HttpClientFactory());
+
         private HttpClient _httpClient;
         private bool _isConnected;
         private Tuple<Process, string, string>? _processInfo;
-
-        internal event Action OnConnected;
-        internal event Action OnDisconnected;
 
         internal HttpClientFactory()
         {
@@ -65,12 +64,8 @@ namespace RiotSharp.Utilities
             if (_isConnected)
                 return;
 
-            var status = GetLeagueStatus();
-            if (status == null)
-                return;
-
-            _processInfo = status;
-            var byteArray = System.Text.Encoding.ASCII.GetBytes("riot:" + status.Item2);
+            _processInfo = GetLeagueStatus();
+            var byteArray = System.Text.Encoding.ASCII.GetBytes("riot:" + _processInfo.Item2);
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
             _isConnected = true;
@@ -115,12 +110,5 @@ namespace RiotSharp.Utilities
             }
             return null;
         }
-    }
-
-    internal class OnWebSocketEventArgs : EventArgs
-    {
-        internal string? Path { get; set; }
-        internal string? Type { get; set; }
-        internal dynamic? Data { get; set; }
     }
 }

@@ -6,19 +6,17 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    public class ChampionSelectService : IChampionSelectService
+    public class ChampionSelectService(HttpClientFactory httpClientFactory) : IChampionSelectService
     {
-        private HttpClientFactory _httpClient;
-
         public async Task<ChampionSelect?> GetChampionSelectAsync()
         {
-            var response = await _httpClient.MakeApiRequest(RequestMethod.Get, "lol-champ-select/v1/session");
+            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "lol-champ-select/v1/session");
             return JsonConvert.DeserializeObject<ChampionSelect?>(response);
         }
 
         public async Task HoverChampionAsync(int actionId, int championId)
         {
-            await _httpClient.MakeApiRequest(RequestMethod.Patch, "/lol-champ-select/v1/session/actions/" + actionId, "{\"championId\":" + championId + "}");
+            await httpClientFactory.MakeApiRequest(RequestMethod.Patch, "/lol-champ-select/v1/session/actions/" + actionId, "{\"championId\":" + championId + "}");
         }
 
         public Task SelectSummonerSpellAsync(SummonerSpell primarySpell, SummonerSpell seconSummonerSpell)

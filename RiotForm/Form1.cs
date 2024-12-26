@@ -1,4 +1,6 @@
+using RiotSharp.Enums;
 using RiotSharp.Services;
+using RiotSharp.Utilities;
 
 namespace RiotForm
 {
@@ -11,9 +13,8 @@ namespace RiotForm
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var accountService = new AccountService();
-
-            await accountService.GetAllProfilePictureIds();
+            var lobbyService = new LobbyService(HttpClientFactory.Instance.Value);
+            await lobbyService.QueueAsync(QueueType.Search);
         }
     }
 }
