@@ -22,11 +22,11 @@ namespace RiotSharp.Services
             return allChampions?.Where(champ => champ?.FreeToPlay ?? false).ToList();
         }
 
-        public async Task<List<Champions>>? GetAllChampionsAsync()
+        public async Task<List<Champions>?> GetAllChampionsAsync()
         {
             var account = await _accountService.GetAccountSessionAsync();
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, $"/lol-champions/v1/inventories/{account.AccountId}/champions-minimal");
-            return JsonConvert.DeserializeObject<List<Champions>>(response);
+            var response = await httpClientFactory.MakeApiRequest<List<Champions>?>(RequestMethod.Get, $"/lol-champions/v1/inventories/{account.AccountId}/champions-minimal");
+            return JsonConvert.DeserializeObject<List<Champions>>(response.ToString());
         }
     }
 }

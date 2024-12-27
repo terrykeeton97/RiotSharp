@@ -9,5 +9,7 @@ namespace RiotSharp.Interfaces
         public Task QueueAsync(QueueType queueType);
 
         public Task SelectRoleAsync(string? primaryRole, string? secondaryRole);
+
+        public Task AcceptQueue();
     }
 }

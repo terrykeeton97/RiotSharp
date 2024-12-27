@@ -1,4 +1,5 @@
-﻿using RiotSharp.Enums;
+﻿using Newtonsoft.Json;
+using RiotSharp.Enums;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Authentication;
@@ -36,10 +37,10 @@ namespace RiotSharp.Utilities
             TryConnect();
         }
 
-        internal async Task<string?> MakeApiRequest(RequestMethod requestMethod, string url, object? body = null)
+        internal async Task<T?> MakeApiRequest<T>(RequestMethod requestMethod, string url, object? body = null)
         {
             if (!_isConnected)
-                throw new InvalidOperationException("Not connected to the LCU Api");
+                throw new InvalidOperationException("Not connected to the LCU API");
 
             if (url[0] != '/')
             {
@@ -48,15 +49,26 @@ namespace RiotSharp.Utilities
 
             if (_processInfo != null)
             {
-                var response = await _httpClient.SendAsync(new HttpRequestMessage(new HttpMethod(requestMethod.ToString().ToUpper()), "https://127.0.0.1:" + _processInfo.Item3 + url)
+                var response = await _httpClient.SendAsync(new HttpRequestMessage(
+                    new HttpMethod(requestMethod.ToString().ToUpper()),
+                    "https://127.0.0.1:" + _processInfo.Item3 + url)
                 {
                     Content = body == null ? null : new StringContent(body.ToString()!, System.Text.Encoding.UTF8, "application/json")
                 });
 
-                return await response.Content.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (typeof(T) == typeof(string)) // Return as string if T is string
+                {
+                    return (T)(object)responseContent;
+                }
+
+                return JsonConvert.DeserializeObject<T>(responseContent);
             }
 
-            return null;
+            return default;
         }
 
         private void TryConnect()

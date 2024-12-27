@@ -10,8 +10,7 @@ namespace RiotSharp.Services
     {
         public async Task<List<FriendRequest?>> GetFriendRequests()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, $"/lol-chat/v2/friend-requests");
-            return JsonConvert.DeserializeObject<List<FriendRequest?>>(response);
+            return await httpClientFactory.MakeApiRequest<List<FriendRequest?>>(RequestMethod.Get, $"/lol-chat/v2/friend-requests");
         }
 
         public async Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests)
@@ -20,7 +19,7 @@ namespace RiotSharp.Services
             {
                 var body = new { direction = "both" };
                 var jsonBody = JsonConvert.SerializeObject(body);
-                await httpClientFactory.MakeApiRequest(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend.Puuid}", jsonBody);
+                await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend.Puuid}", jsonBody);
             }
         }
 
@@ -28,13 +27,12 @@ namespace RiotSharp.Services
         {
             var body = new { direction = "both" };
             var jsonBody = JsonConvert.SerializeObject(body);
-            await httpClientFactory.MakeApiRequest(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{puuid}", jsonBody);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{puuid}", jsonBody);
         }
 
         public async Task<List<Friends>?> GetCurrentFriendsListAsync()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-chat/v1/friends");
-            return JsonConvert.DeserializeObject<List<Friends>>(response);
+            return await httpClientFactory.MakeApiRequest<List<Friends>?>(RequestMethod.Get, "/lol-chat/v1/friends");
         }
 
         public Task InviteFriendAsync(string summonerId)

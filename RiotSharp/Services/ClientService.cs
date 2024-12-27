@@ -10,19 +10,18 @@ namespace RiotSharp.Services
     {
         public async Task<List<SearchState.Root?>> GetSearchState()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-lobby/v2/lobby/matchmaking/search-state");
-            return JsonConvert.DeserializeObject<List<SearchState.Root>?>(response);
+            // Ensure MakeApiRequest<T> is correctly defined as an async method
+            return await httpClientFactory.MakeApiRequest<List<SearchState.Root?>>(RequestMethod.Get, "/lol-lobby/v2/lobby/matchmaking/search-state");
         }
 
         public async Task<List<Invites.Invite>?> GetInvites()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-lobby/v2/received-invitations");
-            return JsonConvert.DeserializeObject<List<Invites.Invite?>>(response);
+            return await httpClientFactory.MakeApiRequest<List<Invites.Invite?>>(RequestMethod.Get, "/lol-lobby/v2/received-invitations");
         }
 
         public async Task AcceptInviteAsync(string inviteId)
         {
-            await httpClientFactory.MakeApiRequest(RequestMethod.Post, $"/lol-lobby/v2/received-invitations/{inviteId}/accept");
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, $"/lol-lobby/v2/received-invitations/{inviteId}/accept");
         }
     }
 }

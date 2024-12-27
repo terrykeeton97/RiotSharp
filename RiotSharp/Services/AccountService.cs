@@ -10,36 +10,31 @@ namespace RiotSharp.Services
     {
         public async Task<CurrentSession?> GetAccountSessionAsync()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
-            return JsonConvert.DeserializeObject<CurrentSession>(response);
+            return await httpClientFactory.MakeApiRequest<CurrentSession?>(RequestMethod.Get, "/lol-login/v1/session");
         }
 
         public async Task<Summoner.Root?> GetSummonerAsync()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-summoner/v1/current-summoner");
-            return JsonConvert.DeserializeObject<Summoner.Root?>(response);
+            return await httpClientFactory.MakeApiRequest<Summoner.Root?>(RequestMethod.Get, "/lol-summoner/v1/current-summoner");
         }
 
         public async Task<string?> GetUsernameAsync()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
-
+            var response = await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Get, "/lol-login/v1/session");
             var json = JsonConvert.DeserializeObject<dynamic>(response);
             return json.username;
         }
 
         public async Task<string?> GetSummonerIdAsync()
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-login/v1/session");
-
+            var response = await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Get, "/lol-login/v1/session");
             var json = JsonConvert.DeserializeObject<dynamic>(response);
             return json.summonerId;
         }
 
         public async Task<Rank.Root?> GetSummonerRankAsync(string summonerName)
         {
-            var response = await httpClientFactory.MakeApiRequest(RequestMethod.Get, "/lol-ranked/v1/current-ranked-stats");
-            return JsonConvert.DeserializeObject<Rank.Root?>(response);
+            return await httpClientFactory.MakeApiRequest<Rank.Root?>(RequestMethod.Get, "/lol-ranked/v1/current-ranked-stats");
         }
 
         public async Task<ProfilePicture?> GetAllProfilePictureIds()

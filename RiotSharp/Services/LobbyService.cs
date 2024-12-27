@@ -9,12 +9,17 @@ namespace RiotSharp.Services
     {
         public async Task CreateLobby(QueueId queueId)
         {
-            await httpClientFactory.MakeApiRequest(RequestMethod.Post, "/lol-lobby/v2/lobby", $"{{\"queueId\":{queueId}}}");
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-lobby/v2/lobby", $"{{\"queueId\":{queueId}}}");
         }
 
         public async Task QueueAsync(QueueType queueType)
         {
-            await httpClientFactory.MakeApiRequest(RequestMethod.Post, "/lol-lobby/v2/lobby/matchmaking/search");
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-lobby/v2/lobby/matchmaking/search");
+        }
+
+        public async Task AcceptQueue()
+        {
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, "/lol-matchmaking/v1/ready-check/accept");
         }
 
         public async Task SelectRoleAsync(string? primaryRole, string? secondaryRole)
@@ -26,7 +31,7 @@ namespace RiotSharp.Services
             };
 
             var jsonBody = JsonConvert.SerializeObject(body);
-            await httpClientFactory.MakeApiRequest(RequestMethod.Put, "/lol-lobby/v1/lobby/members/localMember/position-preferences", jsonBody);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, "/lol-lobby/v1/lobby/members/localMember/position-preferences", jsonBody);
         }
     }
 }
