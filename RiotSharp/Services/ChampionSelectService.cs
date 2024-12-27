@@ -17,14 +17,20 @@ namespace RiotSharp.Services
             await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Patch, "/lol-champ-select/v1/session/actions/" + actionId, "{\"championId\":" + championId + "}");
         }
 
+
         public Task SelectSummonerSpellAsync(SummonerSpell primarySpell, SummonerSpell seconSummonerSpell)
         {
             throw new NotImplementedException();
         }
-
-        public Task DodgeLobbyAsync()
+        
+        public async Task Dodge()
         {
-            throw new NotImplementedException();
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=[\"\",\"teambuilder-draft\",\"quitV2\",\"\"]", true);
+        }
+
+        public async Task LockChampion(int actionId, int championId)
+        {
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Patch, "/lol-champ-select/v1/session/actions/" + actionId, "{\"completed\":true,\"championId\":" + championId + "}");
         }
     }
 }

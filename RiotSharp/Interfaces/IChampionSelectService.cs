@@ -11,6 +11,8 @@ namespace RiotSharp.Interfaces
 
         public Task SelectSummonerSpellAsync(SummonerSpell primarySpell, SummonerSpell seconSummonerSpell);
 
-        public Task DodgeLobbyAsync();
+        public Task Dodge();
+
+        public Task LockChampion(int actionId, int championId);
     }
 }
