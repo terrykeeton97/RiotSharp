@@ -7,7 +7,7 @@ namespace RiotSharp.Services
 {
     public class LobbyService(HttpClientFactory httpClientFactory) : ILobbyService
     {
-        public async Task CreateLobby(QueueId queueId)
+        public async Task CreateLobbyAsync(QueueId queueId)
         {
             await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-lobby/v2/lobby", $"{{\"queueId\":{queueId}}}");
         }
@@ -17,7 +17,7 @@ namespace RiotSharp.Services
             await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-lobby/v2/lobby/matchmaking/search");
         }
 
-        public async Task AcceptQueue()
+        public async Task AcceptQueueAsync()
         {
             await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, "/lol-matchmaking/v1/ready-check/accept");
         }

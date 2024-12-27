@@ -4,8 +4,8 @@ namespace RiotSharp.Interfaces
 {
     internal interface IVanguardService
     {
-        public Task<bool> IsVanguardEnabled();
+        public Task<bool> IsVanguardEnabledAsync();
 
-        public Task<Vanguard.MachineSpecs> MachineSpecs();
+        public Task<Vanguard.MachineSpecs> MachineSpecsAsync();
     }
 }

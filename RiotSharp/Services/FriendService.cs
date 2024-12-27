@@ -3,6 +3,7 @@ using RiotSharp.Enums;
 using RiotSharp.Interfaces;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
+using System.Net.Http;
 
 namespace RiotSharp.Services
 {
@@ -30,6 +31,11 @@ namespace RiotSharp.Services
             await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{puuid}", jsonBody);
         }
 
+        public Task<List<FriendRequest?>> GetFriendRequestsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Friends>?> GetCurrentFriendsListAsync()
         {
             return await httpClientFactory.MakeApiRequest<List<Friends>?>(RequestMethod.Get, "/lol-chat/v1/friends");
@@ -38,6 +44,16 @@ namespace RiotSharp.Services
         public Task InviteFriendAsync(string summonerId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<BlockedSummoners>?> GetBlockedSummonersAsync()
+        {
+            return await httpClientFactory.MakeApiRequest<List<BlockedSummoners>?>(RequestMethod.Get, "/lol-chat/v1/blocked-players");
+        }
+
+        public async Task<string?> UnblockPlayerByIdAsync(string? puuid)
+        {
+            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Delete, $"/lol-chat/v1/blocked-players/{puuid}");
         }
     }
 }

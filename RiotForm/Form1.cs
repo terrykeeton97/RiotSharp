@@ -13,11 +13,15 @@ namespace RiotForm
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var accountService = new AccountService(HttpClientFactory.Instance.Value);
-            await accountService.GetSummonerAsync();
+            var clientService = new ClientService(HttpClientFactory.Instance.Value);
+            var errorList = await clientService.GetAllClientErrorsAsync();
 
-            var lobbyService = new LobbyService(HttpClientFactory.Instance.Value);
-            await lobbyService.QueueAsync(QueueType.Search);
+            foreach (var error in errorList)
+            {
+                await clientService.RemoveClientErrorById(error.Id);
+            }
+
+            errorList = await clientService.GetAllClientErrorsAsync();
         }
     }
 }

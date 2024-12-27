@@ -8,12 +8,12 @@ namespace RiotSharp.Services
 {
     public class VanguardService(HttpClientFactory httpClientFactory) : IVanguardService
     {
-        public async Task<bool> IsVanguardEnabled()
+        public async Task<bool> IsVanguardEnabledAsync()
         {
-            return await httpClientFactory.MakeApiRequest<bool>(RequestMethod.Get, "lol-vanguard/v1/config/enabled");
+            return await httpClientFactory.MakeApiRequest<bool>(RequestMethod.Get, "/lol-vanguard/v1/config/enabled");
         }
 
-        public async Task<Vanguard.MachineSpecs?> MachineSpecs()
+        public async Task<Vanguard.MachineSpecs?> MachineSpecsAsync()
         {
             return await httpClientFactory.MakeApiRequest<Vanguard.MachineSpecs?>(RequestMethod.Get, "/lol-vanguard/v1/machine-specs");
         }

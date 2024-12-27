@@ -60,7 +60,7 @@ namespace RiotSharp.Utilities
 
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                if (typeof(T) == typeof(string)) // Return as string if T is string
+                if (typeof(T) == typeof(string)) // Return the response as a string if Type is string
                 {
                     return (T)(object)responseContent;
                 }

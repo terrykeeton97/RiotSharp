@@ -14,6 +14,16 @@ namespace RiotSharp.Interfaces
 
         public Task<Rank.Root?> GetSummonerRankAsync(string summonerName);
 
-        public Task<ProfilePicture?> GetAllProfilePictureIds();
+        public Task<ProfilePicture?> GetAllProfilePictureIdsAsync();
+
+        public Task<string> GetRpCountAsync();
+
+        public Task<OwnedSkins.Root> GetOwnedSkinsAsync();
+
+        //https://github.com/KebsCS/KBotExt/blob/a65f90767288bd0c94fcfb655507926eb9ffe8fd/KBotExt/MiscTab.h#L350C65-L350C93
+        public Task<PlayerLootMap.Root> GetPlayerLootMapAsync();
+
+        //https://github.com/KebsCS/KBotExt/blob/a65f90767288bd0c94fcfb655507926eb9ffe8fd/KBotExt/MiscTab.h#L502
+        public Task<string?> ChangeRiotIdAsync(string newRiotId, string newTagId);
     }
 }

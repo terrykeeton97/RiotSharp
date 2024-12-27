@@ -10,13 +10,13 @@ namespace RiotSharp.Services
     {
         private IAcccountService _accountService;
 
-        public async Task<List<Champions>>? GetOwnedChampions()
+        public async Task<List<Champions>>? GetOwnedChampionsAsync()
         {
             var allChampions = await GetAllChampionsAsync();
             return allChampions?.Where(champ => champ?.Ownership?.Owned ?? false).ToList();
         }
 
-        public async Task<List<Champions>>? GetFreeToPlayChampions()
+        public async Task<List<Champions>>? GetFreeToPlayChampionsAsync()
         {
             var allChampions = await GetAllChampionsAsync();
             return allChampions?.Where(champ => champ?.FreeToPlay ?? false).ToList();
