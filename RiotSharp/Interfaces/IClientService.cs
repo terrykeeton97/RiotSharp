@@ -10,7 +10,7 @@ namespace RiotSharp.Interfaces
 
         public Task AcceptInviteAsync(string inviteId);
 
-        public Task<GameQueues.Root> GetGameQueuesAsync();
+        public Task<List<GameQueues.Root>> GetGameQueuesAsync();
 
         public Task<List<ClientErrors>> GetAllClientErrorsAsync();
 

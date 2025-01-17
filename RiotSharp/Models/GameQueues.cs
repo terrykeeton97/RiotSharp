@@ -129,6 +129,9 @@ namespace RiotSharp.Models
             [JsonProperty("id")]
             public int? Id;
 
+            [JsonProperty("isCustom")]
+            public bool? IsCustom;
+
             [JsonProperty("isRanked")]
             public bool? IsRanked;
 
@@ -153,6 +156,9 @@ namespace RiotSharp.Models
             [JsonProperty("maxDivisionForPremadeSize2")]
             public string MaxDivisionForPremadeSize2;
 
+            [JsonProperty("maxLobbySpectatorCount")]
+            public int? MaxLobbySpectatorCount;
+
             [JsonProperty("maxTierForPremadeSize2")]
             public string MaxTierForPremadeSize2;
 
@@ -170,6 +176,9 @@ namespace RiotSharp.Models
 
             [JsonProperty("numPlayersPerTeam")]
             public int? NumPlayersPerTeam;
+
+            [JsonProperty("numberOfTeamsInLobby")]
+            public int? NumberOfTeamsInLobby;
 
             [JsonProperty("queueAvailability")]
             public string QueueAvailability;
@@ -198,7 +207,5 @@ namespace RiotSharp.Models
             [JsonProperty("type")]
             public string Type;
         }
-
-
     }
 }

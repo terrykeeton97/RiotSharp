@@ -23,9 +23,9 @@ namespace RiotSharp.Services
             await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, $"/lol-lobby/v2/received-invitations/{inviteId}/accept");
         }
 
-        public async Task<GameQueues.Root> GetGameQueuesAsync()
+        public async Task<List<GameQueues.Root>> GetGameQueuesAsync()
         {
-            return await httpClientFactory.MakeApiRequest<GameQueues.Root>(RequestMethod.Get, "/lol-game-queues/v1/queues");
+            return await httpClientFactory.MakeApiRequest<List<GameQueues.Root>>(RequestMethod.Get, "/lol-game-queues/v1/queues");
         }
 
         public async Task<List<ClientErrors>> GetAllClientErrorsAsync()
