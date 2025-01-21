@@ -14,14 +14,15 @@ namespace RiotForm
         private async void button1_Click(object sender, EventArgs e)
         {
             var clientService = new ClientService(HttpClientFactory.Instance.Value);
-            var errorList = await clientService.GetAllClientErrorsAsync();
+            var queues = await clientService.GetGameQueuesAsync();
 
-            foreach (var error in errorList)
+            foreach (var queue in queues)
             {
-                await clientService.RemoveClientErrorById(error.Id);
+                Console.WriteLine(queue.Name);
+                Console.WriteLine(queue.Description);
+                Console.WriteLine(queue.ChampionsRequiredToPlay);
+                Console.WriteLine(queue.ShortName);
             }
-
-            errorList = await clientService.GetAllClientErrorsAsync();
         }
     }
 }
