@@ -5,8 +5,6 @@ VisualStudioVersion = 17.13.35617.110
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotSharp", "RiotSharp\RiotSharp.csproj", "{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotForm", "RiotForm\RiotForm.csproj", "{16DFA8E2-1F0D-4DB3-880C-C3D0011A3CCB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D19912E7-A150-4E2E-9AC1-9DC94A4C869E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16DFA8E2-1F0D-4DB3-880C-C3D0011A3CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16DFA8E2-1F0D-4DB3-880C-C3D0011A3CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16DFA8E2-1F0D-4DB3-880C-C3D0011A3CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16DFA8E2-1F0D-4DB3-880C-C3D0011A3CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
