@@ -3,7 +3,7 @@ using RiotSharp.Models;
 
 namespace RiotSharp.Interfaces
 {
-    internal interface IChampionSelectService
+    public interface IChampionSelectService
     {
         public Task<ChampionSelect?> GetChampionSelectAsync();
 
@@ -11,7 +11,7 @@ namespace RiotSharp.Interfaces
 
         public Task HoverChampionAsync(int actionId, int championId);
 
-        public Task SelectSummonerSpellAsync(SummonerSpell primarySpell, SummonerSpell seconSummonerSpell);
+        public Task SelectSummonerSpellAsync(SummonerSpell primarySpell, SummonerSpell secondSummonerSpell);
 
         public Task DodgeAsync();
 

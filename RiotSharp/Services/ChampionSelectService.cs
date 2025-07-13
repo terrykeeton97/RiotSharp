@@ -1,4 +1,5 @@
-﻿using RiotSharp.Enums;
+﻿using Newtonsoft.Json;
+using RiotSharp.Enums;
 using RiotSharp.Interfaces;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
@@ -9,7 +10,7 @@ namespace RiotSharp.Services
     {
         public async Task<ChampionSelect?> GetChampionSelectAsync()
         {
-            return await httpClientFactory.MakeApiRequest<ChampionSelect?>(RequestMethod.Get, "lol-champ-select/v1/session");
+            return await httpClientFactory.MakeApiRequest<ChampionSelect?>(RequestMethod.Get, "/lol-champ-select/v1/session");
         }
 
         public async Task<string?> GetLockedChampionIdAsync()
@@ -19,7 +20,9 @@ namespace RiotSharp.Services
 
         public async Task HoverChampionAsync(int actionId, int championId)
         {
-            await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Patch, "/lol-champ-select/v1/session/actions/" + actionId, "{\"championId\":" + championId + "}");
+            var body = new { championId };
+            var jsonBody = JsonConvert.SerializeObject(body);
+            await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Patch, $"/lol-champ-select/v1/session/actions/{actionId}", jsonBody);
         }
 
         public async Task<CurrentRunePage.Root> GetCurrentRunePageAsync()
@@ -27,19 +30,23 @@ namespace RiotSharp.Services
             return await httpClientFactory.MakeApiRequest<CurrentRunePage.Root>(RequestMethod.Get, "/lol-perks/v1/currentpage");
         }
 
-        public Task SelectSummonerSpellAsync(SummonerSpell primarySpell, SummonerSpell seconSummonerSpell)
+        public async Task SelectSummonerSpellAsync(SummonerSpell primarySpell, SummonerSpell secondSummonerSpell)
         {
-            throw new NotImplementedException();
+            var body = new { spell1Id = (int)primarySpell, spell2Id = (int)secondSummonerSpell };
+            var jsonBody = JsonConvert.SerializeObject(body);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Patch, "/lol-champ-select/v1/session/my-selection", jsonBody);
         }
         
         public async Task DodgeAsync()
         {
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=[\"\",\"teambuilder-draft\",\"quitV2\",\"\"]", true);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-login/v1/session/invoke?destination=lcdsServiceProxy&method=call&args=[\"\",\"teambuilder-draft\",\"quitV2\",\"\"]");
         }
 
         public async Task LockChampionAsync(int actionId, int championId)
         {
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Patch, "/lol-champ-select/v1/session/actions/" + actionId, "{\"completed\":true,\"championId\":" + championId + "}");
+            var body = new { completed = true, championId };
+            var jsonBody = JsonConvert.SerializeObject(body);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Patch, $"/lol-champ-select/v1/session/actions/{actionId}", jsonBody);
         }
     }
 }

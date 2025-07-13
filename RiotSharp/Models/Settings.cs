@@ -2,7 +2,7 @@
 
 namespace RiotSharp.Models
 {
-    internal class Settings
+    public class Settings
     {
         public class FloatingText
         {

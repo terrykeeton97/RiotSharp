@@ -5,7 +5,7 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    internal class RiotService(HttpClientFactory httpClientFactory) : IRiotService
+    public class RiotService(HttpClientFactory httpClientFactory) : IRiotService
     {
         public async Task<Settings.Root> GetSettingsAsync()
         {

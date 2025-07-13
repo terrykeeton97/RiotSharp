@@ -2,7 +2,7 @@
 
 namespace RiotSharp.Interfaces
 {
-    internal interface IAcccountService
+    public interface IAccountService
     {
         public Task<CurrentSession?> GetAccountSessionAsync();
 
@@ -16,7 +16,7 @@ namespace RiotSharp.Interfaces
 
         public Task<ProfilePicture?> GetAllProfilePictureIdsAsync();
 
-        public Task<string> GetRpCountAsync();
+        public Task<string?> GetRpCountAsync();
 
         public Task<OwnedSkins.Root> GetOwnedSkinsAsync();
 

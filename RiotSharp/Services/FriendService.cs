@@ -9,18 +9,13 @@ namespace RiotSharp.Services
 {
     public class FriendService(HttpClientFactory httpClientFactory) : IFriendService
     {
-        public async Task<List<FriendRequest?>> GetFriendRequests()
-        {
-            return await httpClientFactory.MakeApiRequest<List<FriendRequest?>>(RequestMethod.Get, $"/lol-chat/v2/friend-requests");
-        }
-
         public async Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests)
         {
             foreach (var friend in friendRequests)
             {
                 var body = new { direction = "both" };
                 var jsonBody = JsonConvert.SerializeObject(body);
-                await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend.Puuid}", jsonBody);
+                await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend?.Puuid}", jsonBody);
             }
         }
 
@@ -31,9 +26,9 @@ namespace RiotSharp.Services
             await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{puuid}", jsonBody);
         }
 
-        public Task<List<FriendRequest?>> GetFriendRequestsAsync()
+        public async Task<List<FriendRequest?>> GetFriendRequestsAsync()
         {
-            throw new NotImplementedException();
+            return await httpClientFactory.MakeApiRequest<List<FriendRequest?>>(RequestMethod.Get, "/lol-chat/v2/friend-requests");
         }
 
         public async Task<List<Friends>?> GetCurrentFriendsListAsync()
@@ -41,9 +36,11 @@ namespace RiotSharp.Services
             return await httpClientFactory.MakeApiRequest<List<Friends>?>(RequestMethod.Get, "/lol-chat/v1/friends");
         }
 
-        public Task InviteFriendAsync(string summonerId)
+        public async Task InviteFriendAsync(string summonerId)
         {
-            throw new NotImplementedException();
+            var body = new { toSummonerId = summonerId };
+            var jsonBody = JsonConvert.SerializeObject(body);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-chat/v1/friend-requests", jsonBody);
         }
 
         public async Task<List<BlockedSummoners>?> GetBlockedSummonersAsync()
@@ -51,9 +48,9 @@ namespace RiotSharp.Services
             return await httpClientFactory.MakeApiRequest<List<BlockedSummoners>?>(RequestMethod.Get, "/lol-chat/v1/blocked-players");
         }
 
-        public async Task<string?> UnblockPlayerByIdAsync(string? puuid)
+        public async Task<string?> UnblockPlayerByIdAsync(string? blockedSummonerId)
         {
-            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Delete, $"/lol-chat/v1/blocked-players/{puuid}");
+            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Delete, $"/lol-chat/v1/blocked-players/{blockedSummonerId}");
         }
     }
 }

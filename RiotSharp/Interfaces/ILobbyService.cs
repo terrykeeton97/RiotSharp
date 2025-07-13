@@ -2,7 +2,7 @@
 
 namespace RiotSharp.Interfaces
 {
-    internal interface ILobbyService
+    public interface ILobbyService
     {
         public Task CreateLobbyAsync(QueueId queueId);
 

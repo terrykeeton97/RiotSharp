@@ -2,7 +2,7 @@
 
 namespace RiotSharp.Interfaces
 {
-    internal interface IFriendService
+    public interface IFriendService
     {
         public Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests);
 

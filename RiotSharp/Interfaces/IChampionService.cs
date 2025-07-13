@@ -2,12 +2,12 @@
 
 namespace RiotSharp.Interfaces
 {
-    internal interface IChampionService
+    public interface IChampionService
     {
         public Task<List<Champions>>? GetOwnedChampionsAsync();
 
         public Task<List<Champions>>? GetFreeToPlayChampionsAsync();
 
-        public Task<List<Champions>>? GetAllChampionsAsync();
+        public Task<List<Champions>?> GetAllChampionsAsync();
     }
 }

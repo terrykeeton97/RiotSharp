@@ -37,7 +37,7 @@ namespace RiotSharp.Utilities
             TryConnect();
         }
 
-        internal async Task<T?> MakeApiRequest<T>(RequestMethod requestMethod, string url, object? body = null)
+        internal async Task<T?> MakeApiRequest<T>(RequestMethod requestMethod, string url, string? body = null)
         {
             if (!_isConnected)
                 throw new InvalidOperationException("Not connected to the LCU API");
@@ -53,7 +53,7 @@ namespace RiotSharp.Utilities
                     new HttpMethod(requestMethod.ToString().ToUpper()),
                     "https://127.0.0.1:" + _processInfo.Item3 + url)
                 {
-                    Content = body == null ? null : new StringContent(body.ToString()!, System.Text.Encoding.UTF8, "application/json")
+                    Content = body == null ? null : new StringContent(body, System.Text.Encoding.UTF8, "application/json")
                 });
 
                 response.EnsureSuccessStatusCode();

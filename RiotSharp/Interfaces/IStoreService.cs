@@ -2,7 +2,7 @@
 
 namespace RiotSharp.Interfaces
 {
-    internal interface IStoreService
+    public interface IStoreService
     {
         //https://github.com/KebsCS/KBotExt/blob/a65f90767288bd0c94fcfb655507926eb9ffe8fd/KBotExt/GameTab.h#L891
         public Task<Store.Catalog> GetStoreCatalogAsync();

@@ -2,7 +2,7 @@
 
 namespace RiotSharp.Interfaces
 {
-    internal interface IClientService
+    public interface IClientService
     {
         public Task<List<SearchState.Root?>> GetSearchStateAsync();
 
