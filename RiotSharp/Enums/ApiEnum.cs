@@ -1,6 +1,6 @@
 ﻿namespace RiotSharp.Enums
 {
-    public enum RequestMethod
+    internal enum RequestMethod
     {
         Get,
         Post,

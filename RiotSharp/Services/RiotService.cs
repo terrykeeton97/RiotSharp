@@ -1,25 +1,25 @@
-﻿using RiotSharp.Enums;
-using RiotSharp.Interfaces;
+﻿using RiotSharp.Constants;
+using RiotSharp.Enums;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    public class RiotService(HttpClientFactory httpClientFactory) : IRiotService
+    internal class RiotService(HttpClientFactory httpClientFactory) : IRiotService
     {
         public async Task<Settings.Root> GetSettingsAsync()
         {
-            return await httpClientFactory.MakeApiRequest<Settings.Root>(RequestMethod.Get, "/lol-game-settings/v1/game-settings");
+            return await httpClientFactory.MakeApiRequest<Settings.Root>(RequestMethod.Get, ApiEndpoints.GameSettings);
         }
 
         public async Task<string?> QuitClient()
         {
-            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Post, "/process-control/v1/process/quit");
+            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Post, ApiEndpoints.QuitClient);
         }
 
         public async Task<string?> RestartUx()
         {
-            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Post, "/riotclient/kill-and-restart-ux");
+            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Post, ApiEndpoints.RestartUx);
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace RiotSharp.Constants
 {
-    public static class ApiEndpoints
+    internal static class ApiEndpoints
     {
         // Account endpoints
         public const string AccountSession = "/lol-login/v1/session";
@@ -47,12 +47,36 @@ namespace RiotSharp.Constants
         // Store endpoints
         public const string StoreCatalog = "/lol-store/v1/catalog";
         public const string StoreUrl = "/lol-store/v1/getStoreUrl";
-        public const string WalletJwt = "/lol-store/v1/wallet";
-        public const string StoreBearerToken = "/lol-store/v1/getAuthToken";
+        public const string WalletJwt = "/lol-inventory/v1/signedWallet/RP";
+        public const string StoreBearerToken = "/lol-rso-auth/v1/authorization/access-token";
 
         // Vanguard endpoints
         public const string VanguardEnabled = "/lol-vanguard/v1/config/enabled";
         public const string VanguardMachineSpecs = "/lol-vanguard/v1/machine-specs";
+
+        // Login endpoints
+        public const string Login = "/lol-login/v1/session";
+        public const string Logout = "/lol-login/v1/session/logout";
+        public const string LoginStatus = "/lol-login/v1/session/status";
+
+        // Additional Client endpoints
+        public const string LobbySearchState = "/lol-lobby/v2/lobby/matchmaking/search-state";
+        public const string AcceptInvite = "/lol-lobby/v2/received-invitations/{0}/accept";
+        public const string ChatErrors = "/lol-chat/v1/errors";
+        public const string RemoveError = "/lol-chat/v1/errors/{0}";
+
+        // Additional Friend endpoints  
+        public const string AcceptFriendRequest = "/lol-chat/v2/friend-requests/{0}";
+        public const string SendFriendRequest = "/lol-chat/v1/friend-requests";
+        public const string UnblockPlayer = "/lol-chat/v1/blocked-players/{0}";
+
+        // Additional Lobby endpoints
+        public const string CreateLobby = "/lol-lobby/v2/lobby";
+        public const string StartMatchmaking = "/lol-lobby/v2/lobby/matchmaking/search";
+        public const string SelectRole = "/lol-lobby/v1/lobby/members/localMember/position-preferences";
+
+        // Additional Champion Select endpoints
+        public const string ChampionSelectAction = "/lol-champ-select/v1/session/actions/{0}";
 
         // External endpoints
         public const string ProfileIconsData = "https://ddragon.leagueoflegends.com/cdn/14.24.1/data/en_US/profileicon.json";

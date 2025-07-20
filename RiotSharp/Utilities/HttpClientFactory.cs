@@ -6,11 +6,11 @@ using System.Security.Authentication;
 
 namespace RiotSharp.Utilities
 {
-    public class HttpClientFactory
+    internal class HttpClientFactory
     {
         public static readonly Lazy<HttpClientFactory> Instance = new(() => new HttpClientFactory());
 
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private bool _isConnected;
         private Tuple<Process, string, string>? _processInfo;
 

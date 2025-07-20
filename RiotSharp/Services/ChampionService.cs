@@ -1,12 +1,11 @@
 ﻿using RiotSharp.Constants;
 using RiotSharp.Enums;
-using RiotSharp.Interfaces;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    public class ChampionService(HttpClientFactory httpClientFactory) : IChampionService
+    internal class ChampionService(HttpClientFactory httpClientFactory) : IChampionService
     {
         public async Task<List<Champions>>? GetOwnedChampionsAsync()
         {

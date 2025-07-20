@@ -10,7 +10,7 @@
         Aram = 450,
     }
 
-    public enum Role
+    internal enum Role
     {
         Unselected = 0,
         Top = 1,

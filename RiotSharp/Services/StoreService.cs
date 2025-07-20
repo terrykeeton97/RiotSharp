@@ -1,30 +1,30 @@
-﻿using RiotSharp.Enums;
-using RiotSharp.Interfaces;
+﻿using RiotSharp.Constants;
+using RiotSharp.Enums;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    public class StoreService(HttpClientFactory httpClientFactory) : IStoreService
+    internal class StoreService(HttpClientFactory httpClientFactory) : IStoreService
     {
         public async Task<Store.Catalog> GetStoreCatalogAsync()
         {
-            return await httpClientFactory.MakeApiRequest<Store.Catalog>(RequestMethod.Get, "/lol-store/v1/catalog");
+            return await httpClientFactory.MakeApiRequest<Store.Catalog>(RequestMethod.Get, ApiEndpoints.StoreCatalog);
         }
 
         public async Task<string> GetStoreUrlAsync()
         {
-            return await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, "/lol-store/v1/getStoreUrl");
+            return await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, ApiEndpoints.StoreUrl);
         }
 
         public async Task<string> GetSingedWalletJwtAsync()
         {
-            return await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, "/lol-inventory/v1/signedWallet/RP");
+            return await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, ApiEndpoints.WalletJwt);
         }
 
         public async Task<Store.BearerToken> GetStoreBearerTokenAsync()
         {
-            return await httpClientFactory.MakeApiRequest<Store.BearerToken>(RequestMethod.Get, "/lol-rso-auth/v1/authorization/access-token");
+            return await httpClientFactory.MakeApiRequest<Store.BearerToken>(RequestMethod.Get, ApiEndpoints.StoreBearerToken);
         }
     }
 }

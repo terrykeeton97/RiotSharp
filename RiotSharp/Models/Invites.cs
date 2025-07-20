@@ -16,7 +16,7 @@ namespace RiotSharp.Models
             public string? FromSummonerName;
 
             [JsonProperty("gameConfig")]
-            internal GameConfig? GameConfig;
+            public GameConfig? GameConfig;
 
             [JsonProperty("invitationId")]
             public string? InvitationId;
@@ -34,7 +34,7 @@ namespace RiotSharp.Models
             public string? Timestamp;
         }
 
-        internal class GameConfig
+        public class GameConfig
         {
             [JsonProperty("gameMode")]
             public string? GameMode;
@@ -49,7 +49,7 @@ namespace RiotSharp.Models
             public int? QueueId;
         }
 
-        internal class Root
+        public class Root
         {
             [JsonProperty("MyArray")]
             public List<Invite>? MyArray;

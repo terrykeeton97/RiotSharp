@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
+using RiotSharp.Constants;
 using RiotSharp.Enums;
-using RiotSharp.Interfaces;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
 using System.Net.Http;
 
 namespace RiotSharp.Services
 {
-    public class FriendService(HttpClientFactory httpClientFactory) : IFriendService
+    internal class FriendService(HttpClientFactory httpClientFactory) : IFriendService
     {
         public async Task AcceptAllFriendRequestAsync(List<FriendRequest?> friendRequests)
         {
@@ -15,7 +15,7 @@ namespace RiotSharp.Services
             {
                 var body = new { direction = "both" };
                 var jsonBody = JsonConvert.SerializeObject(body);
-                await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{friend?.Puuid}", jsonBody);
+                await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, string.Format(ApiEndpoints.AcceptFriendRequest, friend?.Puuid), jsonBody);
             }
         }
 
@@ -23,34 +23,34 @@ namespace RiotSharp.Services
         {
             var body = new { direction = "both" };
             var jsonBody = JsonConvert.SerializeObject(body);
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, $"/lol-chat/v2/friend-requests/{puuid}", jsonBody);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, string.Format(ApiEndpoints.AcceptFriendRequest, puuid), jsonBody);
         }
 
         public async Task<List<FriendRequest?>> GetFriendRequestsAsync()
         {
-            return await httpClientFactory.MakeApiRequest<List<FriendRequest?>>(RequestMethod.Get, "/lol-chat/v2/friend-requests");
+            return await httpClientFactory.MakeApiRequest<List<FriendRequest?>>(RequestMethod.Get, ApiEndpoints.FriendRequests);
         }
 
         public async Task<List<Friends>?> GetCurrentFriendsListAsync()
         {
-            return await httpClientFactory.MakeApiRequest<List<Friends>?>(RequestMethod.Get, "/lol-chat/v1/friends");
+            return await httpClientFactory.MakeApiRequest<List<Friends>?>(RequestMethod.Get, ApiEndpoints.Friends);
         }
 
         public async Task InviteFriendAsync(string summonerId)
         {
             var body = new { toSummonerId = summonerId };
             var jsonBody = JsonConvert.SerializeObject(body);
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, "/lol-chat/v1/friend-requests", jsonBody);
+            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, ApiEndpoints.SendFriendRequest, jsonBody);
         }
 
         public async Task<List<BlockedSummoners>?> GetBlockedSummonersAsync()
         {
-            return await httpClientFactory.MakeApiRequest<List<BlockedSummoners>?>(RequestMethod.Get, "/lol-chat/v1/blocked-players");
+            return await httpClientFactory.MakeApiRequest<List<BlockedSummoners>?>(RequestMethod.Get, ApiEndpoints.BlockedPlayers);
         }
 
         public async Task<string?> UnblockPlayerByIdAsync(string? blockedSummonerId)
         {
-            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Delete, $"/lol-chat/v1/blocked-players/{blockedSummonerId}");
+            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Delete, string.Format(ApiEndpoints.UnblockPlayer, blockedSummonerId));
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
 using RiotSharp.Constants;
 using RiotSharp.Enums;
-using RiotSharp.Interfaces;
 using RiotSharp.Models;
 using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    public class AccountService(HttpClientFactory httpClientFactory) : IAccountService
+    internal class AccountService(HttpClientFactory httpClientFactory) : IAccountService
     {
         public async Task<CurrentSession?> GetAccountSessionAsync()
         {
