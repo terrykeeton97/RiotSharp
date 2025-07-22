@@ -5,8 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
+<<<<<<< HEAD
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+=======
+>>>>>>> parent of 604f8ec (Delete RiotSharp/RiotSharp.csproj)
   </PropertyGroup>
 
   <ItemGroup>
