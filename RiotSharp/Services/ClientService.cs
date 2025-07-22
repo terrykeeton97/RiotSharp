@@ -5,38 +5,46 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    internal class ClientService(HttpClientFactory httpClientFactory) : IClientService
+    public class ClientService : IClient
     {
+        private readonly HttpClientFactory _httpClientFactory;
+
+        public ClientService()
+        {
+            _httpClientFactory = HttpClientFactory.Instance;
+        }
+
         public async Task<List<SearchState.Root?>> GetSearchStateAsync()
         {
-            // Ensure MakeApiRequest<T> is correctly defined as an async method
-            return await httpClientFactory.MakeApiRequest<List<SearchState.Root?>>(RequestMethod.Get, ApiEndpoints.LobbySearchState);
+            return await _httpClientFactory.GetAsync<List<SearchState.Root?>>(ApiEndpoints.LobbySearchState);
         }
 
         public async Task<List<Invites.Invite>?> GetInvitesAsync()
         {
-            return await httpClientFactory.MakeApiRequest<List<Invites.Invite?>>(RequestMethod.Get, ApiEndpoints.Invites);
+            return await _httpClientFactory.GetAsync<List<Invites.Invite>?>(ApiEndpoints.Invites);
         }
 
         public async Task AcceptInviteAsync(string inviteId)
         {
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, string.Format(ApiEndpoints.AcceptInvite, inviteId));
+            using var response = await _httpClientFactory.PostAsync(string.Format(ApiEndpoints.AcceptInvite, inviteId));
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task<List<GameQueues.Root>> GetGameQueuesAsync()
         {
-            return await httpClientFactory.MakeApiRequest<List<GameQueues.Root>>(RequestMethod.Get, ApiEndpoints.GameQueues);
+            return await _httpClientFactory.GetAsync<List<GameQueues.Root>>(ApiEndpoints.GameQueues);
         }
 
         public async Task<List<ClientErrors>> GetAllClientErrorsAsync()
         {
-            return await httpClientFactory.MakeApiRequest<List<ClientErrors>>(RequestMethod.Get, ApiEndpoints.ChatErrors);
+            return await _httpClientFactory.GetAsync<List<ClientErrors>>(ApiEndpoints.ChatErrors);
         }
 
-        //TODO needs fix
         public async Task<string?> RemoveClientErrorById(int? id)
         {
-            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Delete, string.Format(ApiEndpoints.RemoveError, id));
+            using var response = await _httpClientFactory.DeleteAsync(string.Format(ApiEndpoints.RemoveError, id));
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

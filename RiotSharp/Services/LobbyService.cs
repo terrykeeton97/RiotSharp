@@ -5,21 +5,32 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    internal class LobbyService(HttpClientFactory httpClientFactory) : ILobbyService
+    public class LobbyService : ILobby
     {
+        private readonly HttpClientFactory _httpClientFactory;
+
+        public LobbyService()
+        {
+            _httpClientFactory = HttpClientFactory.Instance;
+        }
+
         public async Task CreateLobbyAsync(QueueId queueId)
         {
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, ApiEndpoints.CreateLobby, $"{{\"queueId\":{queueId}}}");
+            var body = new { queueId = (int)queueId };
+            using var response = await _httpClientFactory.PostAsync(ApiEndpoints.CreateLobby, body);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task QueueAsync(QueueType queueType)
         {
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Post, ApiEndpoints.StartMatchmaking);
+            using var response = await _httpClientFactory.PostAsync(ApiEndpoints.StartMatchmaking);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task AcceptQueueAsync()
         {
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, ApiEndpoints.ReadyCheck);
+            using var response = await _httpClientFactory.GetAsync(ApiEndpoints.ReadyCheck);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task SelectRoleAsync(string? primaryRole, string? secondaryRole)
@@ -30,8 +41,8 @@ namespace RiotSharp.Services
                 secondPreference = secondaryRole,
             };
 
-            var jsonBody = JsonConvert.SerializeObject(body);
-            await httpClientFactory.MakeApiRequest<string>(RequestMethod.Put, ApiEndpoints.SelectRole, jsonBody);
+            using var response = await _httpClientFactory.PutAsync(ApiEndpoints.SelectRole, body);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

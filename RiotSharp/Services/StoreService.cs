@@ -5,26 +5,33 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    internal class StoreService(HttpClientFactory httpClientFactory) : IStoreService
+    public class StoreService : IStore
     {
+        private readonly HttpClientFactory _httpClientFactory;
+
+        public StoreService()
+        {
+            _httpClientFactory = HttpClientFactory.Instance;
+        }
+
         public async Task<Store.Catalog> GetStoreCatalogAsync()
         {
-            return await httpClientFactory.MakeApiRequest<Store.Catalog>(RequestMethod.Get, ApiEndpoints.StoreCatalog);
+            return await _httpClientFactory.GetAsync<Store.Catalog>(ApiEndpoints.StoreCatalog);
         }
 
         public async Task<string> GetStoreUrlAsync()
         {
-            return await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, ApiEndpoints.StoreUrl);
+            return await _httpClientFactory.GetAsync<string>(ApiEndpoints.StoreUrl);
         }
 
         public async Task<string> GetSingedWalletJwtAsync()
         {
-            return await httpClientFactory.MakeApiRequest<string>(RequestMethod.Get, ApiEndpoints.WalletJwt);
+            return await _httpClientFactory.GetAsync<string>(ApiEndpoints.WalletJwt);
         }
 
         public async Task<Store.BearerToken> GetStoreBearerTokenAsync()
         {
-            return await httpClientFactory.MakeApiRequest<Store.BearerToken>(RequestMethod.Get, ApiEndpoints.StoreBearerToken);
+            return await _httpClientFactory.GetAsync<Store.BearerToken>(ApiEndpoints.StoreBearerToken);
         }
     }
 }

@@ -5,14 +5,21 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    internal class ChampionService(HttpClientFactory httpClientFactory) : IChampionService
+    public class ChampionService : IChampion
     {
-        public async Task<List<Champions>>? GetOwnedChampionsAsync()
+        private readonly HttpClientFactory _httpClientFactory;
+
+        public ChampionService()
         {
-            return await httpClientFactory.MakeApiRequest<List<Champions>?>(RequestMethod.Get, ApiEndpoints.OwnedChampions);
+            _httpClientFactory = HttpClientFactory.Instance;
         }
 
-        public async Task<List<Champions>>? GetFreeToPlayChampionsAsync()
+        public async Task<List<Champions>?> GetOwnedChampionsAsync()
+        {
+            return await _httpClientFactory.GetAsync<List<Champions>?>(ApiEndpoints.OwnedChampions);
+        }
+
+        public async Task<List<Champions>?> GetFreeToPlayChampionsAsync()
         {
             var allChampions = await GetAllChampionsAsync();
             return allChampions?.Where(champ => champ?.FreeToPlay ?? false).ToList();
@@ -20,7 +27,7 @@ namespace RiotSharp.Services
 
         public async Task<List<Champions>?> GetAllChampionsAsync()
         {
-            return await httpClientFactory.MakeApiRequest<List<Champions>?>(RequestMethod.Get, ApiEndpoints.AllChampions);
+            return await _httpClientFactory.GetAsync<List<Champions>?>(ApiEndpoints.AllChampions);
         }
     }
 }

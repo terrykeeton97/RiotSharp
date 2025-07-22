@@ -6,16 +6,23 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    internal class VanguardService(HttpClientFactory httpClientFactory) : IVanguardService
+    public class VanguardService : IVanguard
     {
+        private readonly HttpClientFactory _httpClientFactory;
+
+        public VanguardService()
+        {
+            _httpClientFactory = HttpClientFactory.Instance;
+        }
+
         public async Task<bool> IsVanguardEnabledAsync()
         {
-            return await httpClientFactory.MakeApiRequest<bool>(RequestMethod.Get, ApiEndpoints.VanguardEnabled);
+            return await _httpClientFactory.GetAsync<bool>(ApiEndpoints.VanguardEnabled);
         }
 
         public async Task<Vanguard.MachineSpecs?> MachineSpecsAsync()
         {
-            return await httpClientFactory.MakeApiRequest<Vanguard.MachineSpecs?>(RequestMethod.Get, ApiEndpoints.VanguardMachineSpecs);
+            return await _httpClientFactory.GetAsync<Vanguard.MachineSpecs?>(ApiEndpoints.VanguardMachineSpecs);
         }
     }
 }

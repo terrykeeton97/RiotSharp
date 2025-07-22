@@ -6,64 +6,70 @@ using RiotSharp.Utilities;
 
 namespace RiotSharp.Services
 {
-    internal class AccountService(HttpClientFactory httpClientFactory) : IAccountService
+    public class AccountService : IAccount
     {
-        public async Task<CurrentSession?> GetAccountSessionAsync()
+        private readonly HttpClientFactory _httpClientFactory;
+
+        public AccountService()
         {
-            return await httpClientFactory.MakeApiRequest<CurrentSession?>(RequestMethod.Get, ApiEndpoints.AccountSession);
+            _httpClientFactory = HttpClientFactory.Instance;
         }
 
-        public async Task<Summoner.Root?> GetSummonerAsync()
+        public async Task<CurrentSession?> GetAccountSession()
         {
-            return await httpClientFactory.MakeApiRequest<Summoner.Root?>(RequestMethod.Get, ApiEndpoints.CurrentSummoner);
+            return await _httpClientFactory.GetAsync<CurrentSession?>(ApiEndpoints.AccountSession);
         }
 
-        public async Task<string?> GetUsernameAsync()
+        public async Task<Summoner.Root?> GetSummoner()
         {
-            var response = await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Get, ApiEndpoints.AccountSession);
-            var json = JsonConvert.DeserializeObject<dynamic>(response);
-            return json?.username;
+            return await _httpClientFactory.GetAsync<Summoner.Root?>(ApiEndpoints.CurrentSummoner);
         }
 
-        public async Task<string?> GetSummonerIdAsync()
+        public async Task<string?> GetUsername()
         {
-            var response = await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Get, ApiEndpoints.AccountSession);
-            var json = JsonConvert.DeserializeObject<dynamic>(response);
-            return json?.summonerId;
+            var session = await _httpClientFactory.GetAsync<CurrentSession>(ApiEndpoints.AccountSession);
+            return session?.Username;
         }
 
-        public async Task<Rank.Root?> GetSummonerRankAsync(string summonerName)
+        public async Task<string?> GetSummonerId()
         {
-            return await httpClientFactory.MakeApiRequest<Rank.Root?>(RequestMethod.Get, ApiEndpoints.CurrentRankedStats);
+            var session = await _httpClientFactory.GetAsync<CurrentSession>(ApiEndpoints.AccountSession);
+            return session?.SummonerId?.ToString();
         }
 
-        public async Task<ProfilePicture?> GetAllProfilePictureIdsAsync()
+        public async Task<Rank.Root?> GetSummonerRank(string summonerName)
         {
-            using var client = new HttpClient();
-            var response = await client.GetStringAsync(ApiEndpoints.ProfileIconsData);
-            return JsonConvert.DeserializeObject<ProfilePicture?>(response);
+            return await _httpClientFactory.GetAsync<Rank.Root?>(ApiEndpoints.CurrentRankedStats);
         }
 
-        public async Task<string?> GetRpCountAsync()
+        public async Task<ProfilePicture?> GetAllProfilePictureIds()
         {
-            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Get, ApiEndpoints.RpWallet);
+            return await _httpClientFactory.GetAsync<ProfilePicture?>(ApiEndpoints.ProfileIconsData);
         }
 
-        public async Task<OwnedSkins.Root> GetOwnedSkinsAsync()
+        public async Task<string?> GetRpCount()
         {
-            return await httpClientFactory.MakeApiRequest<OwnedSkins.Root>(RequestMethod.Get, ApiEndpoints.OwnedSkins);
+            using var response = await _httpClientFactory.GetAsync(ApiEndpoints.RpWallet);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<PlayerLootMap.Root> GetPlayerLootMapAsync()
+        public async Task<OwnedSkins.Root> GetOwnedSkins()
         {
-            return await httpClientFactory.MakeApiRequest<PlayerLootMap.Root>(RequestMethod.Get, ApiEndpoints.PlayerLootMap);
+            return await _httpClientFactory.GetAsync<OwnedSkins.Root>(ApiEndpoints.OwnedSkins);
         }
 
-        public async Task<string?> ChangeRiotIdAsync(string newRiotId, string newTagId)
+        public async Task<PlayerLootMap.Root> GetPlayerLootMap()
+        {
+            return await _httpClientFactory.GetAsync<PlayerLootMap.Root>(ApiEndpoints.PlayerLootMap);
+        }
+
+        public async Task<string?> ChangeRiotId(string newRiotId, string newTagId)
         {
             var body = new { gameName = newRiotId, tagLine = newTagId };
-            var jsonBody = JsonConvert.SerializeObject(body);
-            return await httpClientFactory.MakeApiRequest<string?>(RequestMethod.Post, ApiEndpoints.SaveAlias, jsonBody);
+            using var response = await _httpClientFactory.PostAsync(ApiEndpoints.SaveAlias, body);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }
